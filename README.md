@@ -169,15 +169,88 @@ try {
 }
 ```
 
-## Callbacks (your server)
+## Receiving callbacks
 
-STK Push, B2C, account balance, and transaction status are **asynchronous**: Daraja calls your `resultUrl` (and optionally `queueTimeOutUrl`) with the outcome. You must:
+Daraja sends **POST** requests to your URLs (STK callback, C2B confirmation/validation, B2C result, etc.). The SDK gives you:
 
-1. Expose HTTPS endpoints that accept POST with JSON.
-2. Respond quickly (e.g. 200) and process the body in the background.
-3. Use the types in the SDK (e.g. callback payload shapes) to parse and validate.
+- **Typed payloads** — `StkPushCallbackPayload`, `C2BConfirmationPayload`, `DarajaResultPayload`, etc.
+- **Parsers** — validate raw `req.body` and get typed data: `parseStkPushCallback(body)`, `parseC2BConfirmation(body)`, `parseDarajaResult(body)`.
+- **Rich helpers** — `getStkMetadata(payload)` for amount, receipt number, phone; `getResultParametersMap(payload)` for B2C/balance/status result parameters.
+- **Optional receiver** — `createCallbackHandler({ routes })` returns an HTTP handler you can pass to `http.createServer()` or mount in Express/Fastify.
 
-The SDK does not run a server; it only initiates requests and returns the immediate API response (e.g. `CheckoutRequestID`, `ConversationID`).
+### Option 1: Use parsers in your own routes
+
+In any POST handler, parse the body and use the typed payload:
+
+```ts
+import {
+  parseStkPushCallback,
+  getStkMetadata,
+  parseC2BConfirmation,
+  C2B_VALIDATION_ACCEPT,
+  C2B_VALIDATION_REJECT,
+} from "@landelatech/mpesa-node";
+
+// STK callback
+app.post("/mpesa/stk", (req, res) => {
+  const payload = parseStkPushCallback(req.body);
+  if (payload.ResultCode === 0) {
+    const meta = getStkMetadata(payload);
+    if (meta) console.log(meta.mpesaReceiptNumber, meta.amount, meta.phoneNumber);
+  }
+  res.json({ ResultCode: 0, ResultDesc: "Success" });
+});
+
+// C2B confirmation (payments to your paybill/till)
+app.post("/mpesa/c2b/confirm", (req, res) => {
+  const p = parseC2BConfirmation(req.body);
+  console.log(p.TransID, p.TransAmount, p.MSISDN, p.BillRefNumber);
+  res.sendStatus(200);
+});
+
+// C2B validation (accept or reject before completion)
+app.post("/mpesa/c2b/validate", (req, res) => {
+  const p = parseC2BValidation(req.body);
+  const accept = yourValidationLogic(p); // e.g. check BillRefNumber
+  res.json(accept ? C2B_VALIDATION_ACCEPT : C2B_VALIDATION_REJECT);
+});
+```
+
+### Option 2: Standalone callback server
+
+Use `createCallbackHandler` with predefined routes and pass it to Node’s `http.createServer` (no Express needed):
+
+```ts
+import { createServer } from "node:http";
+import {
+  createCallbackHandler,
+  stkPushRoute,
+  c2BConfirmationRoute,
+  getStkMetadata,
+} from "@landelatech/mpesa-node";
+
+const handler = createCallbackHandler({
+  routes: {
+    "/mpesa/stk": stkPushRoute(async (payload) => {
+      if (payload.ResultCode === 0) {
+        const meta = getStkMetadata(payload);
+        if (meta) await savePayment(meta.mpesaReceiptNumber, meta.amount);
+      }
+    }),
+    "/mpesa/c2b/confirm": c2BConfirmationRoute((p) => {
+      console.log(p.TransID, p.TransAmount, p.BillRefNumber);
+    }),
+  },
+});
+
+createServer(handler).listen(3000);
+```
+
+Handlers can **return a response override** (e.g. for C2B validation): `return { statusCode: 200, body: C2B_VALIDATION_ACCEPT };`.
+
+### C2B registered URLs
+
+When you call `mpesa.c2b.registerUrls()`, set **ConfirmationURL** and **ValidationURL** to the paths that handle confirmation and validation (e.g. `https://your-domain.com/mpesa/c2b/confirm` and `.../mpesa/c2b/validate`). Use the parsers or the callback handler above so you get typed payloads and can respond correctly (e.g. validation must return `C2B_VALIDATION_ACCEPT` or `C2B_VALIDATION_REJECT`).
 
 ## Examples
 
@@ -185,6 +258,7 @@ After building (`yarn build`), copy `examples/env.example` to `.env` in the proj
 
 - `node examples/stk-push.mjs` — STK Push and query
 - `node examples/c2b.mjs` — Register URLs and simulate
+- `node examples/callbacks-server.mjs` — Receive callbacks with typed payloads (standalone HTTP server)
 
 Examples use `dotenv` (dev dependency) to load `.env`. Never commit `.env` or real secrets.
 

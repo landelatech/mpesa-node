@@ -38,6 +38,38 @@ export {
   MpesaValidationError,
 } from "./errors/index.js";
 
+// Callbacks: typed payloads, parsers, and optional receiver
+export {
+  MpesaCallbackError,
+  parseStkPushCallback,
+  getStkMetadata,
+  parseC2BConfirmation,
+  parseC2BValidation,
+  c2bValidationResponse,
+  C2B_VALIDATION_ACCEPT,
+  C2B_VALIDATION_REJECT,
+  parseDarajaResult,
+  getResultParametersMap,
+  createCallbackHandler,
+  stkPushRoute,
+  c2BConfirmationRoute,
+  c2BValidationRoute,
+  darajaResultRoute,
+} from "./callbacks/index.js";
+export type {
+  CallbackItem,
+  StkPushCallbackPayload,
+  StkPushSuccessMetadata,
+  C2BConfirmationPayload,
+  C2BValidationPayload,
+  C2BValidationResponse,
+  DarajaResultPayload,
+  ResultParametersMap,
+  CallbackRoute,
+  CallbackResponseOverride,
+  CreateCallbackHandlerOptions,
+} from "./callbacks/index.js";
+
 // Module input/output types for consumers
 export type { StkPushInput, StkPushResponse, StkQueryInput, StkQueryResponse } from "./modules/stk/types.js";
 export type {
