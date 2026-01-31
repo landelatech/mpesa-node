@@ -28,8 +28,9 @@
  */
 
 export { Mpesa } from "./clients/mpesa-client.js";
-export type { MpesaConfig } from "./config.js";
+export type { MpesaConfig, ResolvedMpesaConfig } from "./config.js";
 export type { Environment } from "./config.js";
+export { MPESA_ENV_KEYS, resolveConfig } from "./config.js";
 export {
   MpesaError,
   MpesaAuthError,

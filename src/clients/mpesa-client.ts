@@ -4,7 +4,7 @@
 
 import { AuthProvider } from "../auth/index.js";
 import { HttpClient } from "../http/client.js";
-import { getBaseUrl, type MpesaConfig } from "../config.js";
+import { getBaseUrl, resolveConfig, type MpesaConfig } from "../config.js";
 import { createStkModule } from "../modules/stk/stk.js";
 import { createC2BModule } from "../modules/c2b/c2b.js";
 import { createB2CModule } from "../modules/b2c/b2c.js";
@@ -19,15 +19,19 @@ import { createTransactionModule } from "../modules/transaction/transaction.js";
  *
  * @example
  * ```ts
+ * // With env vars (MPESA_CONSUMER_KEY, MPESA_CONSUMER_SECRET, etc. set):
+ * const mpesa = new Mpesa({});
+ *
+ * // Or with explicit config:
  * const mpesa = new Mpesa({
- *   consumerKey: process.env.MPESA_CONSUMER_KEY!,
- *   consumerSecret: process.env.MPESA_CONSUMER_SECRET!,
+ *   consumerKey: "...",
+ *   consumerSecret: "...",
  *   environment: "sandbox",
  *   shortCode: "174379",
- *   passKey: process.env.MPESA_PASS_KEY!,
+ *   passKey: "...",
  * });
  *
- * const res = await mpesa.stkPush().push({
+ * const res = await mpesa.stkPush({
  *   phoneNumber: "254708374149",
  *   amount: 10,
  *   callbackUrl: "https://example.com/callback",
@@ -46,23 +50,25 @@ export class Mpesa {
   readonly account: ReturnType<typeof createAccountModule>;
   readonly transaction: ReturnType<typeof createTransactionModule>;
 
-  constructor(config: MpesaConfig) {
+  constructor(config: MpesaConfig = {}) {
+    const resolved = resolveConfig(config);
+
     const auth = new AuthProvider({
-      environment: config.environment,
-      consumerKey: config.consumerKey,
-      consumerSecret: config.consumerSecret,
+      environment: resolved.environment,
+      consumerKey: resolved.consumerKey,
+      consumerSecret: resolved.consumerSecret,
     });
 
-    const baseUrl = getBaseUrl(config.environment);
+    const baseUrl = getBaseUrl(resolved.environment);
     this.http = new HttpClient({
       baseUrl,
       getAccessToken: () => auth.getAccessToken(),
     });
 
-    const shortCode = config.shortCode ?? "";
-    const passKey = config.passKey ?? "";
-    const initiatorName = config.initiatorName ?? "";
-    const securityCredential = config.securityCredential ?? "";
+    const shortCode = resolved.shortCode;
+    const passKey = resolved.passKey;
+    const initiatorName = resolved.initiatorName;
+    const securityCredential = resolved.securityCredential;
 
     this.stk = createStkModule({ http: this.http, shortCode, passKey });
     this.c2b = createC2BModule({ http: this.http, shortCode });

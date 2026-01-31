@@ -6,7 +6,7 @@ Production-ready Node.js (TypeScript) SDK for Safaricom M-Pesa Daraja APIs. Flue
 - **Automatic auth** — OAuth token generation and in-memory caching with refresh
 - **Environment support** — Sandbox and production
 - **Typed** — Full TypeScript with strict mode
-- **Zero hardcoded secrets** — Config via constructor (e.g. env vars)
+- **Zero hardcoded secrets** — Config via constructor or environment variables (env used when not specified)
 - **Typed errors** — `MpesaAuthError`, `MpesaRequestError`, `MpesaValidationError`
 
 ## Requirements
@@ -22,15 +22,21 @@ yarn add @landelatech/mpesa-node
 
 ## Quick start
 
+Credentials can be set in the **environment** or passed explicitly in config. The SDK reads from env when a value is not provided.
+
 ```ts
 import { Mpesa } from "@landelatech/mpesa-node";
 
+// Option 1: Rely on environment (e.g. MPESA_CONSUMER_KEY, MPESA_CONSUMER_SECRET, MPESA_ENVIRONMENT, etc.)
+const mpesa = new Mpesa({});
+
+// Option 2: Pass config explicitly (overrides env for those fields)
 const mpesa = new Mpesa({
-  consumerKey: process.env.MPESA_CONSUMER_KEY!,
-  consumerSecret: process.env.MPESA_CONSUMER_SECRET!,
+  consumerKey: "...",
+  consumerSecret: "...",
   environment: "sandbox",
   shortCode: "174379",
-  passKey: process.env.MPESA_PASS_KEY!,
+  passKey: "...",
 });
 
 // STK Push (Lipa Na M-Pesa Online)
@@ -46,17 +52,19 @@ console.log(res.CheckoutRequestID); // use with stkQuery()
 
 ## Configuration
 
-| Option | Required | Description |
-|--------|----------|-------------|
-| `consumerKey` | Yes | Daraja app consumer key |
-| `consumerSecret` | Yes | Daraja app consumer secret |
-| `environment` | Yes | `"sandbox"` or `"production"` |
-| `shortCode` | For STK/C2B/B2C/balance/status | Paybill or Till number |
-| `passKey` | For STK Push/Query | Lipa Na M-Pesa passkey |
-| `initiatorName` | For B2C/balance/status | API operator username |
-| `securityCredential` | For B2C/balance/status | Encrypted initiator password (RSA) |
+Config fields are **optional**. Any value not passed is read from the environment. Explicit config always overrides env.
 
-Never commit secrets. Use environment variables or a secrets manager.
+| Option | Env fallback | Description |
+|--------|--------------|-------------|
+| `consumerKey` | `MPESA_CONSUMER_KEY` | Daraja app consumer key (required with consumerSecret) |
+| `consumerSecret` | `MPESA_CONSUMER_SECRET` | Daraja app consumer secret (required with consumerKey) |
+| `environment` | `MPESA_ENVIRONMENT` | `"sandbox"` or `"production"` (default: sandbox) |
+| `shortCode` | `MPESA_SHORT_CODE` | Paybill or Till number (for STK/C2B/B2C/balance/status) |
+| `passKey` | `MPESA_PASS_KEY` | Lipa Na M-Pesa passkey (for STK Push/Query) |
+| `initiatorName` | `MPESA_INITIATOR_NAME` | API operator username (for B2C/balance/status) |
+| `securityCredential` | `MPESA_SECURITY_CREDENTIAL` | Encrypted initiator password (for B2C/balance/status) |
+
+**Required for auth:** `consumerKey` and `consumerSecret` must be set (in config or env). All other fields are only needed for the APIs that use them. Never commit secrets.
 
 ## API overview
 
