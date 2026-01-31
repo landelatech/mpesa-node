@@ -1,0 +1,50 @@
+/**
+ * @landelatech/mpesa-node
+ *
+ * Production-ready Node.js SDK for Safaricom M-Pesa Daraja APIs.
+ * Fluent API, automatic OAuth, zero boilerplate.
+ *
+ * @example
+ * ```ts
+ * import { Mpesa } from "@landelatech/mpesa-node";
+ *
+ * const mpesa = new Mpesa({
+ *   consumerKey: process.env.MPESA_CONSUMER_KEY!,
+ *   consumerSecret: process.env.MPESA_CONSUMER_SECRET!,
+ *   environment: "sandbox",
+ *   shortCode: "174379",
+ *   passKey: process.env.MPESA_PASS_KEY!,
+ * });
+ *
+ * const res = await mpesa.stkPush({
+ *   phoneNumber: "254708374149",
+ *   amount: 10,
+ *   callbackUrl: "https://example.com/callback",
+ *   accountReference: "order-123",
+ *   transactionDesc: "Payment",
+ * });
+ * console.log(res.CheckoutRequestID);
+ * ```
+ */
+
+export { Mpesa } from "./clients/mpesa-client.js";
+export type { MpesaConfig } from "./config.js";
+export type { Environment } from "./config.js";
+export {
+  MpesaError,
+  MpesaAuthError,
+  MpesaRequestError,
+  MpesaValidationError,
+} from "./errors/index.js";
+
+// Module input/output types for consumers
+export type { StkPushInput, StkPushResponse, StkQueryInput, StkQueryResponse } from "./modules/stk/types.js";
+export type {
+  C2BRegisterUrlsInput,
+  C2BRegisterUrlsResponse,
+  C2BSimulateInput,
+  C2BSimulateResponse,
+} from "./modules/c2b/types.js";
+export type { B2CSendInput, B2CSendResponse } from "./modules/b2c/types.js";
+export type { AccountBalanceInput, AccountBalanceResponse } from "./modules/account/types.js";
+export type { TransactionStatusInput, TransactionStatusResponse } from "./modules/transaction/types.js";
