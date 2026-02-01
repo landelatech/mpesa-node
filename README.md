@@ -1,5 +1,7 @@
 # @landelatech/mpesa-node
 
+
+[![Build](https://github.com/landelatech/mpesa-node/actions/workflows/build.yml/badge.svg)](https://github.com/landelatech/mpesa-node/actions/workflows/build.yml)
 Production-ready Node.js (TypeScript) SDK for Safaricom M-Pesa Daraja APIs. Fluent API, automatic OAuth, zero boilerplate.
 
 - **Fluent API** — Method-based, not endpoint-based
@@ -11,7 +13,7 @@ Production-ready Node.js (TypeScript) SDK for Safaricom M-Pesa Daraja APIs. Flue
 
 ## Requirements
 
-- Node.js 18+
+- Node.js 20+
 - Yarn (classic v1)
 
 ## Installation
