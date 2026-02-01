@@ -24,13 +24,17 @@ jobs:
       - name: Install
         run: yarn install --frozen-lockfile
 
-      - name: Build
-        run: yarn build
 
       - name: Test
         run: yarn test
 
-      - name: GitHub Release
+      - name: Build
+        run: yarn build
+
+      - name: Publish to npm
+        run: npm publish --access public
+
+      - name: Publish Release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
