@@ -51,6 +51,8 @@ describe("Mpesa STK Push", () => {
 
     expect(res.CheckoutRequestID).toBe("co-id");
     expect(res.ResponseCode).toBe("0");
+    expect(res.timestamp).toBeDefined();
+    expect(res.timestamp).toMatch(/^\d{14}$/);
 
     const postCall = vi.mocked(fetch).mock.calls.find((c) => c[1]?.method === "POST");
     expect(postCall).toBeDefined();
@@ -138,5 +140,47 @@ describe("Mpesa STK Query", () => {
     const res = await mpesa.stkQuery({ checkoutRequestId: "co-id" });
     expect(res.CheckoutRequestID).toBe("co-id");
     expect(res.ResultCode).toBe(0);
+  });
+
+  it("uses provided timestamp when querying", async () => {
+    vi.mocked(fetch)
+      .mockResolvedValueOnce({
+        ok: true,
+        text: () =>
+          Promise.resolve(JSON.stringify({ access_token: "token", expires_in: "3599" })),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              ResponseCode: "0",
+              ResponseDescription: "Success",
+              MerchantRequestID: "m-id",
+              CheckoutRequestID: "co-id",
+              ResultCode: 0,
+              ResultDesc: "Success",
+            })
+          ),
+      } as Response);
+
+    const mpesa = new Mpesa({
+      consumerKey: "key",
+      consumerSecret: "secret",
+      environment: "sandbox",
+      shortCode: "174379",
+      passKey: "pass",
+    });
+
+    await mpesa.stkQuery({
+      checkoutRequestId: "co-id",
+      timestamp: "20260201120000",
+    });
+
+    const postCall = vi.mocked(fetch).mock.calls.find((c) => c[1]?.method === "POST");
+    expect(postCall).toBeDefined();
+    const body = JSON.parse((postCall![1] as RequestInit).body as string);
+    expect(body.Timestamp).toBe("20260201120000");
+    expect(body.CheckoutRequestID).toBe("co-id");
   });
 });

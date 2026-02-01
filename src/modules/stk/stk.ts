@@ -6,7 +6,7 @@ import { HttpClient } from "../../http/client.js";
 import { MpesaValidationError } from "../../errors/index.js";
 import { validatePhone, requireNonEmpty, requirePositiveAmount, validateUrl } from "../../utils/validation.js";
 import { getTimestamp, getStkPassword } from "../../utils/stk.js";
-import type { StkPushInput, StkPushResponse, StkQueryInput, StkQueryResponse } from "./types.js";
+import type { StkPushInput, StkPushResponse, StkPushResult, StkQueryInput, StkQueryResponse } from "./types.js";
 
 export interface StkModuleConfig {
   http: HttpClient;
@@ -21,9 +21,9 @@ export function createStkModule(config: StkModuleConfig) {
     /**
      * Initiate STK Push (Lipa Na M-Pesa Online).
      * Sends a prompt to the customer's phone to enter M-Pesa PIN.
-     * @returns CheckoutRequestID – use it with stkQuery() to poll status
+     * @returns CheckoutRequestID, timestamp, etc. – use checkoutRequestId and timestamp with stkQuery() to poll status
      */
-    async push(input: StkPushInput): Promise<StkPushResponse> {
+    async push(input: StkPushInput): Promise<StkPushResult> {
       requireNonEmpty(input.phoneNumber, "phoneNumber");
       requirePositiveAmount(input.amount, "amount");
       validateUrl(input.callbackUrl, "callbackUrl");
@@ -66,11 +66,13 @@ export function createStkModule(config: StkModuleConfig) {
         TransactionDesc: input.transactionDesc,
       };
 
-      return http.post<StkPushResponse>("/mpesa/stkpush/v1/processrequest", body);
+      const response = await http.post<StkPushResponse>("/mpesa/stkpush/v1/processrequest", body);
+      return { ...response, timestamp };
     },
 
     /**
      * Query status of an STK Push using CheckoutRequestID.
+     * Pass the timestamp from stkPush() so the request password matches the original push.
      */
     async query(input: StkQueryInput): Promise<StkQueryResponse> {
       requireNonEmpty(input.checkoutRequestId, "checkoutRequestId");
@@ -80,7 +82,7 @@ export function createStkModule(config: StkModuleConfig) {
         throw new MpesaValidationError("STK Query requires shortCode and passKey in config");
       }
 
-      const timestamp = getTimestamp();
+      const timestamp = input.timestamp ?? getTimestamp();
       const password = getStkPassword(short, passKey, timestamp);
 
       const body = {

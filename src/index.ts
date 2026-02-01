@@ -71,7 +71,7 @@ export type {
 } from "./callbacks/index.js";
 
 // Module input/output types for consumers
-export type { StkPushInput, StkPushResponse, StkQueryInput, StkQueryResponse } from "./modules/stk/types.js";
+export type { StkPushInput, StkPushResponse, StkPushResult, StkQueryInput, StkQueryResponse } from "./modules/stk/types.js";
 export type {
   C2BRegisterUrlsInput,
   C2BRegisterUrlsResponse,

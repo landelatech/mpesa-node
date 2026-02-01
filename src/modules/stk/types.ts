@@ -29,9 +29,17 @@ export interface StkPushResponse {
   CustomerMessage: string;
 }
 
+/** STK Push response plus the timestamp used for the request. Use this timestamp with stkQuery() when polling status. */
+export type StkPushResult = StkPushResponse & {
+  /** Timestamp used for this push (YYYYMMDDHHmmss). Pass to stkQuery() as `timestamp` when querying status. */
+  timestamp: string;
+};
+
 export interface StkQueryInput {
   /** CheckoutRequestID from STK Push response. */
   checkoutRequestId: string;
+  /** Optional: timestamp from the original stkPush() response. Use it when querying so the password matches the push. */
+  timestamp?: string;
   /** Optional: shortcode override. */
   shortCode?: string;
 }
