@@ -15,23 +15,30 @@ jobs:
         node-version:
           - 20
           - 22
+          - 25
           - latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Node
+      - name: Setup Node version ${{ matrix['node-version'] }}
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
+          check-latest: 'true'
 
-      - name: Install
+      - name: Install dependencies with Yarn
         run: yarn install --frozen-lockfile
 
-      - name: Build
+      - name: Lint the code
+        run: yarn lint
+
+      - name: Test the code
+        run: yarn test
+
+      - name: Build the project
         run: yarn build
 
-      - name: Test
-        run: yarn test
+
