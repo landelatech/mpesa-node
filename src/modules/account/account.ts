@@ -2,10 +2,10 @@
  * Account Balance API – request balance callback.
  */
 
-import { HttpClient } from "../../http/client.js";
-import { MpesaValidationError } from "../../errors/index.js";
-import { validateUrl } from "../../utils/validation.js";
-import type { AccountBalanceInput, AccountBalanceResponse } from "./types.js";
+import { HttpClient } from "../../http";
+import { MpesaValidationError } from "../../errors";
+import { validateUrl } from "../../utils/validation";
+import type { AccountBalanceInput, AccountBalanceResponse } from "./types";
 
 export interface AccountModuleConfig {
   http: HttpClient;

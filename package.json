@@ -21,7 +21,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsup",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint src tests",
@@ -55,6 +55,7 @@
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.4.0",
     "prettier": "^3.1.0",
+    "tsup": "^8.5.1",
     "typescript": "^5.3.0",
     "vitest": "^4.0.18"
   },

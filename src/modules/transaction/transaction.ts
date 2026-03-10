@@ -2,10 +2,10 @@
  * Transaction Status API – query status of a transaction.
  */
 
-import { HttpClient } from "../../http/client.js";
-import { MpesaValidationError } from "../../errors/index.js";
-import { validateUrl, requireNonEmpty } from "../../utils/validation.js";
-import type { TransactionStatusInput, TransactionStatusResponse } from "./types.js";
+import { HttpClient } from "../../http";
+import { MpesaValidationError } from "../../errors";
+import { validateUrl, requireNonEmpty } from "../../utils/validation";
+import type { TransactionStatusInput, TransactionStatusResponse } from "./types";
 
 export interface TransactionModuleConfig {
   http: HttpClient;

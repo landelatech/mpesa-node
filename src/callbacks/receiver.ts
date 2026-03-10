@@ -4,11 +4,11 @@
  */
 
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { parseStkPushCallback } from "./parsers.js";
-import type { StkPushCallbackPayload } from "./types.js";
-import type { C2BConfirmationPayload, C2BValidationPayload, DarajaResultPayload } from "./types.js";
-import { parseC2BConfirmation, parseC2BValidation, parseDarajaResult } from "./parsers.js";
-import { MpesaCallbackError } from "./parsers.js";
+import { parseStkPushCallback } from "./parsers";
+import type { StkPushCallbackPayload } from "./types";
+import type { C2BConfirmationPayload, C2BValidationPayload, DarajaResultPayload } from "./types";
+import { parseC2BConfirmation, parseC2BValidation, parseDarajaResult } from "./parsers";
+import { MpesaCallbackError } from "./parsers";
 
 export type { StkPushCallbackPayload, C2BConfirmationPayload, C2BValidationPayload, DarajaResultPayload };
 

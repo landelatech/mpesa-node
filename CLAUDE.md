@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-yarn build          # Compile TypeScript to dist/
+yarn build          # Bundle with tsup → dist/index.js + dist/index.d.ts
 yarn test           # Run all tests (vitest)
 yarn test:watch     # Run tests in watch mode
 yarn lint           # Lint src/ and tests/
@@ -37,7 +37,7 @@ This is an ESM TypeScript SDK (`"type": "module"`). Source lives in `src/`, comp
 
 ### Key conventions
 
-- All internal imports use `.js` extensions (ESM-compatible).
+- Internal imports use no file extension — `"./clients/mpesa-client"` not `"./clients/mpesa-client.js"`. `tsconfig.json` uses `"moduleResolution": "Bundler"` which allows this; `tsup` resolves paths and emits correct ESM in `dist/`.
 - Each module is a factory function (`createStkModule({ http, shortCode, passKey })`) rather than a class.
 - Env var names are centralized in `MPESA_ENV_KEYS` in `config.ts`.
 - Tests use `vi.stubGlobal("fetch", vi.fn())` to mock HTTP — no actual network calls. Mock `fetch` twice per test: first call is the OAuth token fetch, second is the API call.

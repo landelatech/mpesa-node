@@ -2,15 +2,15 @@
  * C2B: Register URLs and simulate (sandbox).
  */
 
-import { HttpClient } from "../../http/client.js";
-import { MpesaValidationError } from "../../errors/index.js";
-import { validatePhone, validateUrl, requirePositiveAmount, requireNonEmpty } from "../../utils/validation.js";
+import { HttpClient } from "../../http";
+import { MpesaValidationError } from "../../errors";
+import { validatePhone, validateUrl, requirePositiveAmount, requireNonEmpty } from "../../utils/validation";
 import type {
   C2BRegisterUrlsInput,
   C2BRegisterUrlsResponse,
   C2BSimulateInput,
   C2BSimulateResponse,
-} from "./types.js";
+} from "./types";
 
 export interface C2BModuleConfig {
   http: HttpClient;

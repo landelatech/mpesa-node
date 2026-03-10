@@ -27,16 +27,16 @@
  * ```
  */
 
-export { Mpesa } from "./clients/mpesa-client.js";
-export type { MpesaConfig, ResolvedMpesaConfig } from "./config.js";
-export type { Environment } from "./config.js";
-export { MPESA_ENV_KEYS, resolveConfig } from "./config.js";
+export { Mpesa } from "./clients/mpesa-client";
+export type { MpesaConfig, ResolvedMpesaConfig } from "./config";
+export type { Environment } from "./config";
+export { MPESA_ENV_KEYS, resolveConfig } from "./config";
 export {
   MpesaError,
   MpesaAuthError,
   MpesaRequestError,
   MpesaValidationError,
-} from "./errors/index.js";
+} from "./errors/index";
 
 // Callbacks: typed payloads, parsers, and optional receiver
 export {
@@ -55,7 +55,7 @@ export {
   c2BConfirmationRoute,
   c2BValidationRoute,
   darajaResultRoute,
-} from "./callbacks/index.js";
+} from "./callbacks/index";
 export type {
   CallbackItem,
   StkPushCallbackPayload,
@@ -68,16 +68,16 @@ export type {
   CallbackRoute,
   CallbackResponseOverride,
   CreateCallbackHandlerOptions,
-} from "./callbacks/index.js";
+} from "./callbacks/index";
 
 // Module input/output types for consumers
-export type { StkPushInput, StkPushResponse, StkPushResult, StkQueryInput, StkQueryResponse } from "./modules/stk/types.js";
+export type { StkPushInput, StkPushResponse, StkPushResult, StkQueryInput, StkQueryResponse } from "./modules/stk/types";
 export type {
   C2BRegisterUrlsInput,
   C2BRegisterUrlsResponse,
   C2BSimulateInput,
   C2BSimulateResponse,
-} from "./modules/c2b/types.js";
-export type { B2CSendInput, B2CSendResponse } from "./modules/b2c/types.js";
-export type { AccountBalanceInput, AccountBalanceResponse } from "./modules/account/types.js";
-export type { TransactionStatusInput, TransactionStatusResponse } from "./modules/transaction/types.js";
+} from "./modules/c2b/types";
+export type { B2CSendInput, B2CSendResponse } from "./modules/b2c/types";
+export type { AccountBalanceInput, AccountBalanceResponse } from "./modules/account/types";
+export type { TransactionStatusInput, TransactionStatusResponse } from "./modules/transaction/types";

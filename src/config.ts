@@ -3,7 +3,7 @@
  * Credentials can be passed in config or read from environment (see resolveConfig).
  */
 
-import { MpesaValidationError } from "./errors/index.js";
+import { MpesaValidationError } from "./errors";
 
 export type Environment = "sandbox" | "production";
 

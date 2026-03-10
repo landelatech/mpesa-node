@@ -2,14 +2,14 @@
  * Main M-Pesa SDK client: fluent API and module wiring.
  */
 
-import { AuthProvider } from "../auth/index.js";
-import { HttpClient } from "../http/client.js";
-import { getBaseUrl, resolveConfig, type MpesaConfig } from "../config.js";
-import { createStkModule } from "../modules/stk/stk.js";
-import { createC2BModule } from "../modules/c2b/c2b.js";
-import { createB2CModule } from "../modules/b2c/b2c.js";
-import { createAccountModule } from "../modules/account/account.js";
-import { createTransactionModule } from "../modules/transaction/transaction.js";
+import {AuthProvider} from "../auth";
+import {HttpClient} from "../http";
+import {getBaseUrl, type MpesaConfig, resolveConfig} from "../config";
+import {createStkModule} from "../modules/stk/stk";
+import {createC2BModule} from "../modules/c2b/c2b";
+import {createB2CModule} from "../modules/b2c/b2c";
+import {createAccountModule} from "../modules/account/account";
+import {createTransactionModule} from "../modules/transaction/transaction";
 
 /**
  * M-Pesa SDK client.
@@ -42,72 +42,71 @@ import { createTransactionModule } from "../modules/transaction/transaction.js";
  * ```
  */
 export class Mpesa {
-  private readonly http: HttpClient;
+    readonly c2b: ReturnType<typeof createC2BModule>;
+    readonly b2c: ReturnType<typeof createB2CModule>;
+    readonly account: ReturnType<typeof createAccountModule>;
+    readonly transaction: ReturnType<typeof createTransactionModule>;
+    private readonly http: HttpClient;
+    private readonly stk: ReturnType<typeof createStkModule>;
 
-  private readonly stk: ReturnType<typeof createStkModule>;
-  readonly c2b: ReturnType<typeof createC2BModule>;
-  readonly b2c: ReturnType<typeof createB2CModule>;
-  readonly account: ReturnType<typeof createAccountModule>;
-  readonly transaction: ReturnType<typeof createTransactionModule>;
+    constructor(config: MpesaConfig = {}) {
+        const resolved = resolveConfig(config);
 
-  constructor(config: MpesaConfig = {}) {
-    const resolved = resolveConfig(config);
+        const auth = new AuthProvider({
+            environment: resolved.environment,
+            consumerKey: resolved.consumerKey,
+            consumerSecret: resolved.consumerSecret,
+        });
 
-    const auth = new AuthProvider({
-      environment: resolved.environment,
-      consumerKey: resolved.consumerKey,
-      consumerSecret: resolved.consumerSecret,
-    });
+        const baseUrl = getBaseUrl(resolved.environment);
+        this.http = new HttpClient({
+            baseUrl,
+            getAccessToken: () => auth.getAccessToken(),
+        });
 
-    const baseUrl = getBaseUrl(resolved.environment);
-    this.http = new HttpClient({
-      baseUrl,
-      getAccessToken: () => auth.getAccessToken(),
-    });
+        const shortCode = resolved.shortCode;
+        const passKey = resolved.passKey;
+        const initiatorName = resolved.initiatorName;
+        const securityCredential = resolved.securityCredential;
 
-    const shortCode = resolved.shortCode;
-    const passKey = resolved.passKey;
-    const initiatorName = resolved.initiatorName;
-    const securityCredential = resolved.securityCredential;
+        this.stk = createStkModule({http: this.http, shortCode, passKey});
+        this.c2b = createC2BModule({http: this.http, shortCode});
+        this.b2c = createB2CModule({
+            http: this.http,
+            shortCode,
+            initiatorName,
+            securityCredential,
+        });
+        this.account = createAccountModule({
+            http: this.http,
+            shortCode,
+            initiatorName,
+            securityCredential,
+        });
+        this.transaction = createTransactionModule({
+            http: this.http,
+            shortCode,
+            initiatorName,
+            securityCredential,
+        });
+    }
 
-    this.stk = createStkModule({ http: this.http, shortCode, passKey });
-    this.c2b = createC2BModule({ http: this.http, shortCode });
-    this.b2c = createB2CModule({
-      http: this.http,
-      shortCode,
-      initiatorName,
-      securityCredential,
-    });
-    this.account = createAccountModule({
-      http: this.http,
-      shortCode,
-      initiatorName,
-      securityCredential,
-    });
-    this.transaction = createTransactionModule({
-      http: this.http,
-      shortCode,
-      initiatorName,
-      securityCredential,
-    });
-  }
+    /**
+     * Initiate STK Push (Lipa Na M-Pesa Online).
+     * Sends a prompt to the customer's phone; use the returned CheckoutRequestID with stkQuery().
+     */
+    async stkPush(
+        input: Parameters<ReturnType<typeof createStkModule>["push"]>[0]
+    ): Promise<ReturnType<ReturnType<typeof createStkModule>["push"]>> {
+        return this.stk.push(input);
+    }
 
-  /**
-   * Initiate STK Push (Lipa Na M-Pesa Online).
-   * Sends a prompt to the customer's phone; use the returned CheckoutRequestID with stkQuery().
-   */
-  async stkPush(
-    input: Parameters<ReturnType<typeof createStkModule>["push"]>[0]
-  ): Promise<ReturnType<ReturnType<typeof createStkModule>["push"]>> {
-    return this.stk.push(input);
-  }
-
-  /**
-   * Query STK Push status using CheckoutRequestID from stkPush() response.
-   */
-  async stkQuery(
-    input: Parameters<ReturnType<typeof createStkModule>["query"]>[0]
-  ): Promise<ReturnType<ReturnType<typeof createStkModule>["query"]>> {
-    return this.stk.query(input);
-  }
+    /**
+     * Query STK Push status using CheckoutRequestID from stkPush() response.
+     */
+    async stkQuery(
+        input: Parameters<ReturnType<typeof createStkModule>["query"]>[0]
+    ): Promise<ReturnType<ReturnType<typeof createStkModule>["query"]>> {
+        return this.stk.query(input);
+    }
 }

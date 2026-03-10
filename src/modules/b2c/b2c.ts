@@ -2,15 +2,15 @@
  * B2C (Business to Customer) – send money to customers.
  */
 
-import { HttpClient } from "../../http/client.js";
-import { MpesaValidationError } from "../../errors/index.js";
+import { HttpClient } from "../../http";
+import { MpesaValidationError } from "../../errors";
 import {
   validatePhone,
   validateUrl,
   requireNonEmpty,
   requirePositiveAmount,
-} from "../../utils/validation.js";
-import type { B2CSendInput, B2CSendResponse } from "./types.js";
+} from "../../utils/validation";
+import type { B2CSendInput, B2CSendResponse } from "./types";
 
 export interface B2CModuleConfig {
   http: HttpClient;

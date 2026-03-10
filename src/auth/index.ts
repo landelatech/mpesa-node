@@ -8,7 +8,7 @@ import {
   isTokenExpired,
   parseExpiresIn,
   type TokenCache,
-} from "./token.js";
+} from "./token";
 
 export interface AuthConfig {
   environment: "sandbox" | "production";

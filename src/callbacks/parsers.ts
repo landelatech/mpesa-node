@@ -3,7 +3,7 @@
  * Use in your POST handler: parseStkPushCallback(req.body) etc.
  */
 
-import { MpesaError } from "../errors/index.js";
+import { MpesaError } from "../errors";
 import type {
   StkPushCallbackPayload,
   StkPushSuccessMetadata,
@@ -13,7 +13,7 @@ import type {
   DarajaResultPayload,
   CallbackItem,
   ResultParametersMap,
-} from "./types.js";
+} from "./types";
 
 /** Thrown when callback body does not match expected shape. */
 export class MpesaCallbackError extends MpesaError {

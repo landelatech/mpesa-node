@@ -3,7 +3,7 @@
  * Uses native fetch; no external HTTP dependency.
  */
 
-import { MpesaRequestError } from "../errors/index.js";
+import { MpesaRequestError } from "../errors";
 
 export type HttpMethod = "GET" | "POST";
 

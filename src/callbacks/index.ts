@@ -11,7 +11,7 @@ export type {
   C2BValidationResponse,
   DarajaResultPayload,
   ResultParametersMap,
-} from "./types.js";
+} from "./types";
 
 export {
   MpesaCallbackError,
@@ -24,7 +24,7 @@ export {
   C2B_VALIDATION_REJECT,
   parseDarajaResult,
   getResultParametersMap,
-} from "./parsers.js";
+} from "./parsers";
 
 export {
   createCallbackHandler,
@@ -32,10 +32,10 @@ export {
   c2BConfirmationRoute,
   c2BValidationRoute,
   darajaResultRoute,
-} from "./receiver.js";
+} from "./receiver";
 
 export type {
   CallbackRoute,
   CallbackResponseOverride,
   CreateCallbackHandlerOptions,
-} from "./receiver.js";
+} from "./receiver";
