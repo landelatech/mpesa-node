@@ -16,6 +16,7 @@ yarn format:check   # Check formatting
 ```
 
 Run a single test file:
+
 ```bash
 yarn vitest run tests/stk.test.ts
 ```
