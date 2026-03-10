@@ -176,7 +176,7 @@ try {
 Daraja sends **POST** requests to your URLs (STK callback, C2B confirmation/validation, B2C result, etc.). The SDK gives you:
 
 - **Typed payloads** — `StkPushCallbackPayload`, `C2BConfirmationPayload`, `DarajaResultPayload`, etc.
-- **Parsers** — validate raw `req.body` and get typed data: `parseStkPushCallback(body)`, `parseC2BConfirmation(body)`, `parseDarajaResult(body)`.
+- **Parsers** — validate raw `req.body` and get typed data: `parseStkPushCallback(body)`, `parseC2BConfirmation(body)`, `parseC2BValidation(body)`, `parseDarajaResult(body)`.
 - **Rich helpers** — `getStkMetadata(payload)` for amount, receipt number, phone; `getResultParametersMap(payload)` for B2C/balance/status result parameters.
 - **Optional receiver** — `createCallbackHandler({ routes })` returns an HTTP handler you can pass to `http.createServer()` or mount in Express/Fastify.
 
@@ -189,6 +189,7 @@ import {
   parseStkPushCallback,
   getStkMetadata,
   parseC2BConfirmation,
+  parseC2BValidation,
   C2B_VALIDATION_ACCEPT,
   C2B_VALIDATION_REJECT,
 } from "@landelatech/mpesa-node";

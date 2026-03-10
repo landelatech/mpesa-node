@@ -88,7 +88,8 @@ function send(res: ServerResponse, status: number, body: string | Record<string,
  *     },
  *   },
  * });
- * require("http").createServer(handler).listen(3000);
+ * import { createServer } from "node:http";
+ * createServer(handler).listen(3000);
  * ```
  */
 export function createCallbackHandler(options: CreateCallbackHandlerOptions): HttpHandler {
@@ -172,8 +173,7 @@ export function c2BConfirmationRoute(handler: (payload: C2BConfirmationPayload) 
   return { parse: parseC2BConfirmation, handler };
 }
 
-/** Predefined route for C2B validation (return C2B_VALIDATION_ACCEPT or C2B_VALIDATION_REJECT from your handler if needed). */
-/** Predefined route for C2B validation. Return C2B_VALIDATION_ACCEPT or C2B_VALIDATION_REJECT (or custom { statusCode, body }) so Daraja gets the correct JSON. */
+/** Predefined route for C2B validation. Return C2B_VALIDATION_ACCEPT or C2B_VALIDATION_REJECT (or a custom { statusCode, body }) so Daraja gets the correct JSON. */
 export function c2BValidationRoute(handler: (payload: C2BValidationPayload) => void | Promise<void> | CallbackResponseOverride | Promise<CallbackResponseOverride>): CallbackRoute<C2BValidationPayload> {
   return { parse: parseC2BValidation, handler };
 }

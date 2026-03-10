@@ -27,13 +27,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
-          check-latest: 'true'
+          check-latest: true
 
       - name: Install dependencies with Yarn
         run: yarn install --frozen-lockfile
 
+      - name: Check formatting
+        run: yarn format:check
+
       - name: Lint the code
         run: yarn lint
+
+      - name: Type-check
+        run: yarn typecheck
 
       - name: Test the code
         run: yarn test
