@@ -37,7 +37,7 @@ jobs:
         run: yarn docs:build
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        run: npm publish --access public --provenance --verbose
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v2
