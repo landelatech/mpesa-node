@@ -1,6 +1,8 @@
 import type {
   AccountBalanceResponse,
   Mpesa,
+  PullQueryResponse,
+  PullRegisterResponse,
   QrGenerateResponse,
   ReversalResponse,
   StkPushResult,
@@ -20,6 +22,8 @@ type AccountBalanceReturn = ReturnType<Mpesa["account"]["balance"]>;
 type TransactionStatusReturn = ReturnType<Mpesa["transaction"]["status"]>;
 type ReversalReturn = ReturnType<Mpesa["reversal"]["reverse"]>;
 type QrGenerateReturn = ReturnType<Mpesa["qr"]["generate"]>;
+type PullRegisterReturn = ReturnType<Mpesa["pull"]["register"]>;
+type PullQueryReturn = ReturnType<Mpesa["pull"]["query"]>;
 
 type StkPushReturnMatches = Expect<Equal<StkPushReturn, Promise<StkPushResult>>>;
 type StkQueryReturnMatches = Expect<Equal<StkQueryReturn, Promise<StkQueryResponse>>>;
@@ -31,6 +35,8 @@ type TransactionStatusReturnMatches = Expect<
 >;
 type ReversalReturnMatches = Expect<Equal<ReversalReturn, Promise<ReversalResponse>>>;
 type QrGenerateReturnMatches = Expect<Equal<QrGenerateReturn, Promise<QrGenerateResponse>>>;
+type PullRegisterReturnMatches = Expect<Equal<PullRegisterReturn, Promise<PullRegisterResponse>>>;
+type PullQueryReturnMatches = Expect<Equal<PullQueryReturn, Promise<PullQueryResponse>>>;
 
 export type PublicApiTypeAssertions = [
   StkPushReturnMatches,
@@ -39,4 +45,6 @@ export type PublicApiTypeAssertions = [
   TransactionStatusReturnMatches,
   ReversalReturnMatches,
   QrGenerateReturnMatches,
+  PullRegisterReturnMatches,
+  PullQueryReturnMatches,
 ];

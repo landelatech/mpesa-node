@@ -34,3 +34,15 @@ sidebar:
 
 - Those APIs are asynchronous. Confirm the result and timeout URLs are live and correctly routed.
 - Persist the `ConversationID` and `OriginatorConversationID` from the submission response so you can match the later callback.
+
+## C2B callbacks do not match portal records
+
+- Treat missing confirmation callbacks as a reconciliation problem, not proof that the customer never paid.
+- Compare the time window in the M-Pesa Org portal and run [Pull Transactions](/guides/pull-transactions/) for the affected shortcode.
+- Match on bill reference, MSISDN, amount, and your own internal business record before crediting or retrying.
+
+## You see `500.003.02` or `500.003.03`
+
+- `500.003.02` usually means Safaricom spike-arrest throttling.
+- `500.003.03` usually means your quota or TPS limit was exceeded.
+- Back off, reduce concurrency, and queue work instead of hammering the same request path.

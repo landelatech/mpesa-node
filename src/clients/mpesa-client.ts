@@ -25,6 +25,8 @@ import { createReversalModule } from "../modules/reversal/reversal";
 import type { ReversalModule } from "../modules/reversal/types";
 import { createQrModule } from "../modules/qr/qr";
 import type { QrModule } from "../modules/qr/types";
+import { createPullModule } from "../modules/pull/pull";
+import type { PullModule } from "../modules/pull/types";
 
 /**
  * M-Pesa SDK client.
@@ -63,6 +65,7 @@ export class Mpesa {
   readonly transaction: TransactionModule;
   readonly reversal: ReversalModule;
   readonly qr: QrModule;
+  readonly pull: PullModule;
   private readonly http: HttpClient;
   private readonly stk: StkModule;
 
@@ -117,6 +120,7 @@ export class Mpesa {
       securityCredential,
     });
     this.qr = createQrModule({ http: this.http });
+    this.pull = createPullModule({ http: this.http, shortCode });
   }
 
   /**

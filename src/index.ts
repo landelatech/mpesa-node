@@ -95,6 +95,15 @@ export type {
   QrTransactionCode,
 } from "./modules/qr/types";
 export type {
+  PullFilterType,
+  PullModule,
+  PullQueryInput,
+  PullQueryResponse,
+  PullRegisterInput,
+  PullRegisterResponse,
+  PullTransactionRecord,
+} from "./modules/pull/types";
+export type {
   AccountBalanceInput,
   AccountBalanceResponse,
   AccountModule,

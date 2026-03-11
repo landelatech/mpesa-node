@@ -27,6 +27,12 @@ sidebar:
 - Final success or failure usually arrives through the async callback route.
 - For STK callbacks, `ResultCode === 0` is success. A common failure example is user-cancelled STK authorization with `1032`.
 
+## Rate-limit and traffic errors worth recognizing
+
+- `500.003.02` usually indicates spike-arrest throttling.
+- `500.003.03` usually indicates quota or TPS exhaustion.
+- These are strong signals to slow down request volume rather than blindly retrying in a tight loop.
+
 ## Good practice
 
 Normalize your own application error shape around the SDK errors rather than matching raw Daraja strings directly. `responseBody` is useful for debugging but not stable enough to become your business logic contract.

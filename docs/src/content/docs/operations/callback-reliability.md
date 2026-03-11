@@ -19,14 +19,14 @@ Production-safe integrations assume:
 
 ## Endpoint map by API
 
-| Flow               | Primary callback  | Secondary callback or recovery path   |
-| ------------------ | ----------------- | ------------------------------------- |
-| STK Push           | `callbackUrl`     | `stkQuery()` if callback is delayed   |
-| C2B                | `confirmationUrl` | `validationUrl` before completion     |
-| B2C                | `resultUrl`       | `queueTimeOutUrl` plus reconciliation |
-| Account balance    | `resultUrl`       | `queueTimeOutUrl`                     |
-| Transaction status | `resultUrl`       | `queueTimeOutUrl`                     |
-| Reversal           | `resultUrl`       | `queueTimeOutUrl`                     |
+| Flow               | Primary callback  | Secondary callback or recovery path                                       |
+| ------------------ | ----------------- | ------------------------------------------------------------------------- |
+| STK Push           | `callbackUrl`     | `stkQuery()` if callback is delayed                                       |
+| C2B                | `confirmationUrl` | `validationUrl` before completion, then `pull.query()` for reconciliation |
+| B2C                | `resultUrl`       | `queueTimeOutUrl` plus reconciliation                                     |
+| Account balance    | `resultUrl`       | `queueTimeOutUrl`                                                         |
+| Transaction status | `resultUrl`       | `queueTimeOutUrl`                                                         |
+| Reversal           | `resultUrl`       | `queueTimeOutUrl`                                                         |
 
 ## Idempotency rules
 
@@ -67,7 +67,7 @@ Use a periodic worker to review records stuck in intermediate states.
 
 1. Find records in `submitted` or `timed_out` state beyond your expected callback window.
 2. For STK, run `stkQuery()` using the stored `CheckoutRequestID`.
-3. For C2B, compare your received confirmations with the M-Pesa Org portal and any pull-based reconciliation process you operate.
+3. For C2B, compare your received confirmations with the M-Pesa Org portal and run [Pull Transactions](/guides/pull-transactions/) for the affected window.
 4. For B2C, reversal, balance, or status flows, inspect stored conversation IDs and your operational logs.
 5. Move ambiguous records to `needs_review` instead of guessing.
 6. Keep every recovery attempt in your audit history.

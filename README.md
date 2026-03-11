@@ -11,6 +11,7 @@ PesaKit gives you one `Mpesa` client for the implemented Daraja flows, with buil
 - Ship faster from Node.js with less Daraja boilerplate
 - Keep payment flows explicit and typed instead of stitching JSON payloads by hand
 - Reuse one consistent client for STK Push, Dynamic QR, C2B, B2C, balance, status, and reversal flows
+- Recover missing C2B history with pull-based reconciliation for recent transactions
 - Handle callback-heavy integrations with typed parsers and a lightweight HTTP callback handler
 - Keep credentials flexible: constructor config overrides environment values when needed
 
@@ -54,6 +55,7 @@ console.log(response.CheckoutRequestID);
 - `mpesa.stkPush()` and `mpesa.stkQuery()`
 - `mpesa.c2b.registerUrls()` and `mpesa.c2b.simulate()`
 - `mpesa.qr.generate()`
+- `mpesa.pull.register()` and `mpesa.pull.query()`
 - `mpesa.b2c.send()`
 - `mpesa.account.balance()`
 - `mpesa.transaction.status()`
@@ -67,6 +69,7 @@ This package is intentionally optimized for the day-to-day Daraja integrations m
 - merchant collection flows
 - payout and operational flows
 - callback-safe backend integrations
+- recent C2B reconciliation and operational recovery
 
 It does not try to wrap every Daraja product. APIs that usually require special onboarding, commercial agreements, or niche enterprise workflows are tracked in the docs implementation matrix but intentionally kept out of the core SDK surface.
 
@@ -76,7 +79,7 @@ It does not try to wrap every Daraja product. APIs that usually require special 
 - Hosted docs: deploy `docs/dist` to Netlify and set `SITE_URL=https://pesakit.landelatech.com`
 - Local docs dev server: `yarn docs:dev`
 
-The docs cover setup, configuration, STK, Dynamic QR, C2B, B2C, callbacks, sandbox credentials, go-live preparation, troubleshooting, error handling, and the current API coverage matrix.
+The docs cover setup, configuration, STK, Dynamic QR, C2B, Pull Transactions, B2C, callbacks, sandbox credentials, go-live preparation, troubleshooting, error handling, and the current API coverage matrix.
 
 ## About Landela Tech
 

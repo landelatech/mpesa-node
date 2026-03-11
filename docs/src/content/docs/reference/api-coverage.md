@@ -34,7 +34,7 @@ sidebar:
 | Business Pay Bill                 | Payments     | `Not implemented` | Part of the broader B2B-style Daraja surface                                          |
 | Business Buy Goods                | Payments     | `Not implemented` | Part of the broader B2B-style Daraja surface                                          |
 | B2B Express CheckOut              | Payments     | `Not implemented` | Not currently wrapped                                                                 |
-| Pull Transactions                 | Experience   | `Not implemented` | Useful for reconciliation, but not currently wrapped                                  |
+| Pull Transactions                 | Experience   | `Implemented`     | Exposed as `mpesa.pull.register()` and `mpesa.pull.query()`                           |
 | Business To Pochi                 | Disbursement | `Out of scope`    | Usually depends on extra onboarding, wallet prerequisites, and narrower partner setup |
 | SWAP                              | Security     | `Out of scope`    | Commercial onboarding, fraud-check workflow, and separate Safaricom approval path     |
 | IMSI                              | Security     | `Out of scope`    | Commercial onboarding, fraud-check workflow, and separate Safaricom approval path     |
