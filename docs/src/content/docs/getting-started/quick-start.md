@@ -53,4 +53,4 @@ console.log(response.CheckoutRequestID);
 1. Move your credentials into [environment variables](/getting-started/configuration/).
 2. Read the [end-to-end STK payment flow](/guides/end-to-end-stk/) to see the full request, callback, and recovery path.
 3. Add a [callback endpoint](/guides/callbacks/) before using asynchronous APIs in a real flow.
-4. Use the flow-specific guides for STK Push, C2B, B2C, account balance, transaction status, or reversal.
+4. Use the flow-specific guides for STK Push, Dynamic QR, C2B, B2C, account balance, transaction status, or reversal.

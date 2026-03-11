@@ -15,6 +15,7 @@ Production-safe integrations assume:
 - callbacks can be retried
 - timeout notifications can arrive before a final result
 - your own receiver can be down temporarily
+- a `503` or unavailable listener can cause Daraja to drop a callback result
 
 ## Endpoint map by API
 
@@ -47,6 +48,10 @@ At minimum, keep:
 - timestamps for first seen, last seen, and any retries
 - M-Pesa receipt number or transaction ID when available
 
+## Network controls
+
+If you protect callback routes with IP filtering, allow the Safaricom gateway callback IPs documented in the callbacks guide. Otherwise your firewall can become the reason Daraja cannot deliver the result at all.
+
 ## Timeout callbacks are not the same as final failure
 
 `queueTimeOutUrl` means the workflow did not finish in time from Daraja's perspective.
@@ -62,9 +67,10 @@ Use a periodic worker to review records stuck in intermediate states.
 
 1. Find records in `submitted` or `timed_out` state beyond your expected callback window.
 2. For STK, run `stkQuery()` using the stored `CheckoutRequestID`.
-3. For B2C, reversal, balance, or status flows, inspect stored conversation IDs and your operational logs.
-4. Move ambiguous records to `needs_review` instead of guessing.
-5. Keep every recovery attempt in your audit history.
+3. For C2B, compare your received confirmations with the M-Pesa Org portal and any pull-based reconciliation process you operate.
+4. For B2C, reversal, balance, or status flows, inspect stored conversation IDs and your operational logs.
+5. Move ambiguous records to `needs_review` instead of guessing.
+6. Keep every recovery attempt in your audit history.
 
 ## Suggested outcome rules
 

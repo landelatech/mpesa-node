@@ -89,6 +89,12 @@ export type {
 } from "./modules/c2b/types";
 export type { B2CCommandId, B2CModule, B2CSendInput, B2CSendResponse } from "./modules/b2c/types";
 export type {
+  QrGenerateInput,
+  QrGenerateResponse,
+  QrModule,
+  QrTransactionCode,
+} from "./modules/qr/types";
+export type {
   AccountBalanceInput,
   AccountBalanceResponse,
   AccountModule,

@@ -2,7 +2,17 @@
 
 [![Build](https://github.com/landelatech/mpesa-node/actions/workflows/build.yml/badge.svg)](https://github.com/landelatech/mpesa-node/actions/workflows/build.yml)
 
-Typed Node.js SDK for Safaricom M-Pesa Daraja APIs. The package ships a single `Mpesa` client with automatic OAuth, request validation, typed errors, callback helpers, and fluent modules for the implemented Daraja flows.
+`@landelatech/mpesa-node` is a focused Node.js SDK for Safaricom M-Pesa Daraja APIs. It is built for teams that want to ship M-Pesa payments from a Node-based backend without hand-rolling OAuth, request signing, callback parsing, or flow-specific payload glue.
+
+The SDK gives you one `Mpesa` client for the implemented Daraja flows, with built-in OAuth, typed requests and responses, validation at the API boundary, and practical helpers for async callback handling.
+
+## Why use this SDK
+
+- Ship faster from Node.js with less Daraja boilerplate
+- Keep payment flows explicit and typed instead of stitching JSON payloads by hand
+- Reuse one consistent client for STK Push, Dynamic QR, C2B, B2C, balance, status, and reversal flows
+- Handle callback-heavy integrations with typed parsers and a lightweight HTTP callback handler
+- Keep credentials flexible: constructor config overrides environment values when needed
 
 ## Requirements
 
@@ -39,14 +49,26 @@ const response = await mpesa.stkPush({
 console.log(response.CheckoutRequestID);
 ```
 
-## Implemented modules
+## What you can build with it
 
 - `mpesa.stkPush()` and `mpesa.stkQuery()`
 - `mpesa.c2b.registerUrls()` and `mpesa.c2b.simulate()`
+- `mpesa.qr.generate()`
 - `mpesa.b2c.send()`
 - `mpesa.account.balance()`
 - `mpesa.transaction.status()`
 - `mpesa.reversal.reverse()`
+
+## Integration goals
+
+This package is intentionally optimized for the day-to-day Daraja integrations most Node teams actually need:
+
+- customer checkout flows
+- merchant collection flows
+- payout and operational flows
+- callback-safe backend integrations
+
+It does not try to wrap every Daraja product. APIs that usually require special onboarding, commercial agreements, or niche enterprise workflows are tracked in the docs implementation matrix but intentionally kept out of the core SDK surface.
 
 ## Documentation
 
@@ -54,7 +76,7 @@ console.log(response.CheckoutRequestID);
 - Hosted docs: deploy `docs/dist` to Netlify and set `SITE_URL=https://mpesa-node-docs.landelatech.com`
 - Local docs dev server: `yarn docs:dev`
 
-The docs cover setup, configuration, callbacks, sandbox credentials, go-live preparation, troubleshooting, error handling, and the current API coverage matrix.
+The docs cover setup, configuration, STK, Dynamic QR, C2B, B2C, callbacks, sandbox credentials, go-live preparation, troubleshooting, error handling, and the current API coverage matrix.
 
 ## About Landela Tech
 

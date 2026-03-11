@@ -9,8 +9,8 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "M-Pesa Node",
-      description: "Typed Node.js SDK and field guide for Safaricom M-Pesa Daraja APIs.",
-      tagline: "Typed Daraja workflows for Node.js teams shipping real money movement.",
+      description: "Node.js SDK and field guide for Safaricom M-Pesa Daraja APIs with built-in OAuth, typed flows, and callback helpers.",
+      tagline: "Ship M-Pesa faster from Node.js with less Daraja plumbing.",
       logo: {
         src: "./src/assets/mpesa-node-mark.svg",
         alt: "M-Pesa Node",

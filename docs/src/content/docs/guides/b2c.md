@@ -2,7 +2,7 @@
 title: B2C Payments
 description: Send money from your shortcode to a customer and handle the asynchronous result.
 sidebar:
-  order: 4
+  order: 5
 ---
 
 ## What B2C means
@@ -53,9 +53,9 @@ await mpesa.b2c.send({
 
 | `commandId` | Typical use |
 | ----------- | ----------- |
-| `BusinessPayment` | General disbursements, partner settlements, customer refunds |
-| `SalaryPayment` | Payroll-like payouts |
-| `PromotionPayment` | Campaign, bonus, or promotional transfers |
+| `BusinessPayment` | Sends money to registered M-Pesa customers for general business disbursements |
+| `SalaryPayment` | Sends salary payouts and can be used for both registered and unregistered M-Pesa customers |
+| `PromotionPayment` | Sends promotional payouts to registered M-Pesa customers |
 
 - `commandId` defaults to `BusinessPayment`.
 - Pick the value that matches the Daraja business purpose you are actually running.

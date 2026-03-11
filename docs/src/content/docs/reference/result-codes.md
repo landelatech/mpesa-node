@@ -38,9 +38,14 @@ Safaricom may return other non-zero codes over time. Keep your business logic to
 | `ResultCode` | Meaning |
 | ------------ | ------- |
 | `0` | accept and allow the transaction to continue |
-| `1` | reject the transaction |
+| `C2B00011` | reject: invalid MSISDN |
+| `C2B00012` | reject: invalid account number |
+| `C2B00013` | reject: invalid amount |
+| `C2B00014` | reject: invalid KYC details |
+| `C2B00015` | reject: invalid shortcode |
+| `C2B00016` | reject: other error |
 
-The SDK exposes `C2B_VALIDATION_ACCEPT` and `C2B_VALIDATION_REJECT` so you do not have to build this response shape yourself.
+The SDK exposes `C2B_VALIDATION_ACCEPT` and `C2B_VALIDATION_REJECT`, and it also exposes `c2bValidationResponse()` when you want to return a specific Daraja rejection code.
 
 ## Async result callbacks for B2C, balance, status, and reversal
 
