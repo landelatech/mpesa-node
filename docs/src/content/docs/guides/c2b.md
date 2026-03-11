@@ -77,7 +77,7 @@ import {
   c2bValidationResponse,
   parseC2BConfirmation,
   parseC2BValidation,
-} from "@landelatech/mpesa-node";
+} from "@landelatech/pesakit";
 
 app.post("/mpesa/c2b/validate", (req, res) => {
   const payload = parseC2BValidation(req.body);

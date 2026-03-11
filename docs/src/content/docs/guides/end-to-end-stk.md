@@ -24,7 +24,7 @@ This is the practical flow most teams need in production:
 ## Step 1: create the client
 
 ```ts
-import { Mpesa } from "@landelatech/mpesa-node";
+import { Mpesa } from "@landelatech/pesakit";
 
 export const mpesa = new Mpesa({
   consumerKey: process.env.MPESA_CONSUMER_KEY,
@@ -75,7 +75,7 @@ export async function createCheckout(order: {
 The callback is where you decide whether the payment actually succeeded.
 
 ```ts
-import { getStkMetadata, parseStkPushCallback } from "@landelatech/mpesa-node";
+import { getStkMetadata, parseStkPushCallback } from "@landelatech/pesakit";
 
 app.post("/mpesa/stk", async (req, res) => {
   const payload = parseStkPushCallback(req.body);

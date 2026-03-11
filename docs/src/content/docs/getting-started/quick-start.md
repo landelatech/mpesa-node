@@ -14,13 +14,13 @@ sidebar:
 ## Install
 
 ```bash
-yarn add @landelatech/mpesa-node
+yarn add @landelatech/pesakit
 ```
 
 ## First request
 
 ```ts
-import { Mpesa } from "@landelatech/mpesa-node";
+import { Mpesa } from "@landelatech/pesakit";
 
 const mpesa = new Mpesa({
   consumerKey: process.env.MPESA_CONSUMER_KEY,

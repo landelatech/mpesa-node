@@ -1,10 +1,10 @@
-# @landelatech/mpesa-node
+# PesaKit
 
 [![Build](https://github.com/landelatech/mpesa-node/actions/workflows/build.yml/badge.svg)](https://github.com/landelatech/mpesa-node/actions/workflows/build.yml)
 
-`@landelatech/mpesa-node` is a focused Node.js SDK for Safaricom M-Pesa Daraja APIs. It is built for teams that want to ship M-Pesa payments from a Node-based backend without hand-rolling OAuth, request signing, callback parsing, or flow-specific payload glue.
+`@landelatech/pesakit` is the Node.js toolkit for shipping Safaricom M-Pesa integrations from a backend without hand-rolling OAuth, request signing, callback parsing, or flow-specific payload glue.
 
-The SDK gives you one `Mpesa` client for the implemented Daraja flows, with built-in OAuth, typed requests and responses, validation at the API boundary, and practical helpers for async callback handling.
+PesaKit gives you one `Mpesa` client for the implemented Daraja flows, with built-in OAuth, typed requests and responses, validation at the API boundary, and practical helpers for async callback handling.
 
 ## Why use this SDK
 
@@ -22,13 +22,13 @@ The SDK gives you one `Mpesa` client for the implemented Daraja flows, with buil
 ## Install
 
 ```bash
-yarn add @landelatech/mpesa-node
+yarn add @landelatech/pesakit
 ```
 
 ## Quick start
 
 ```ts
-import { Mpesa } from "@landelatech/mpesa-node";
+import { Mpesa } from "@landelatech/pesakit";
 
 const mpesa = new Mpesa({
   consumerKey: process.env.MPESA_CONSUMER_KEY,
@@ -72,8 +72,8 @@ It does not try to wrap every Daraja product. APIs that usually require special 
 
 ## Documentation
 
-- Docs site: [mpesa-node-docs.landelatech.com](https://mpesa-node-docs.landelatech.com)
-- Hosted docs: deploy `docs/dist` to Netlify and set `SITE_URL=https://mpesa-node-docs.landelatech.com`
+- Docs site: [pesakit.landelatech.com](https://pesakit.landelatech.com)
+- Hosted docs: deploy `docs/dist` to Netlify and set `SITE_URL=https://pesakit.landelatech.com`
 - Local docs dev server: `yarn docs:dev`
 
 The docs cover setup, configuration, STK, Dynamic QR, C2B, B2C, callbacks, sandbox credentials, go-live preparation, troubleshooting, error handling, and the current API coverage matrix.

@@ -1,10 +1,10 @@
 ---
-title: M-Pesa Node
-description: Node.js SDK and implementation guide for Safaricom M-Pesa Daraja APIs.
+title: PesaKit
+description: PesaKit is the Node.js SDK and implementation guide for Safaricom M-Pesa Daraja APIs.
 template: splash
 hero:
-  title: Ship M-Pesa payments from Node.js without the plumbing
-  tagline: One focused SDK for STK Push, Dynamic QR, C2B, B2C, status checks, reversals, and callback-heavy Daraja integrations.
+  title: PesaKit for M-Pesa on Node.js
+  tagline: The practical toolkit for STK Push, Dynamic QR, C2B, B2C, status checks, reversals, and callback-heavy Daraja integrations.
   actions:
     - text: Quick start
       link: /getting-started/quick-start/
@@ -23,7 +23,7 @@ sidebar:
 
 - Build against Safaricom Daraja from a Node.js backend without carrying your own auth, request-shaping, and callback-parsing plumbing.
 - Keep integrations explicit and maintainable with typed inputs, typed responses, and fast-fail validation at the SDK boundary.
-- Move faster across common M-Pesa payment and operational flows with one consistent `Mpesa` client.
+- Move faster across common M-Pesa payment and operational flows with one consistent `Mpesa` client from PesaKit.
 
 ## What you get out of the box
 

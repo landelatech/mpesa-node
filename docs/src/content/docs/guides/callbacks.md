@@ -31,7 +31,7 @@ import {
   parseC2BValidation,
   parseDarajaResult,
   parseStkPushCallback,
-} from "@landelatech/mpesa-node";
+} from "@landelatech/pesakit";
 
 app.post("/mpesa/stk", (req, res) => {
   const payload = parseStkPushCallback(req.body);
@@ -76,7 +76,7 @@ import {
   createCallbackHandler,
   darajaResultRoute,
   stkPushRoute,
-} from "@landelatech/mpesa-node";
+} from "@landelatech/pesakit";
 
 const handler = createCallbackHandler({
   routes: {
