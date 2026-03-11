@@ -7,14 +7,14 @@ sidebar:
 
 ## Which endpoints each flow needs
 
-| Flow | Endpoints you expose | Why they exist |
-| ---- | -------------------- | -------------- |
-| STK Push | `callbackUrl` | final payment success or failure |
-| C2B | `validationUrl`, `confirmationUrl` | pre-check and final payment receipt |
-| B2C | `resultUrl`, `queueTimeOutUrl` | final result and timeout notification |
-| Account balance | `resultUrl`, `queueTimeOutUrl` | final async result and timeout notification |
-| Transaction status | `resultUrl`, `queueTimeOutUrl` | final async result and timeout notification |
-| Reversal | `resultUrl`, `queueTimeOutUrl` | final async result and timeout notification |
+| Flow               | Endpoints you expose               | Why they exist                              |
+| ------------------ | ---------------------------------- | ------------------------------------------- |
+| STK Push           | `callbackUrl`                      | final payment success or failure            |
+| C2B                | `validationUrl`, `confirmationUrl` | pre-check and final payment receipt         |
+| B2C                | `resultUrl`, `queueTimeOutUrl`     | final result and timeout notification       |
+| Account balance    | `resultUrl`, `queueTimeOutUrl`     | final async result and timeout notification |
+| Transaction status | `resultUrl`, `queueTimeOutUrl`     | final async result and timeout notification |
+| Reversal           | `resultUrl`, `queueTimeOutUrl`     | final async result and timeout notification |
 
 - Every callback endpoint should be public, stable, and served over HTTPS.
 - The SDK validates callback payload shapes, but you still own idempotency, persistence, and business decisions.

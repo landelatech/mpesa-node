@@ -9,8 +9,10 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "PesaKit",
-      description: "PesaKit is the Node.js toolkit and field guide for Safaricom M-Pesa Daraja APIs.",
-      tagline: "Build and operate M-Pesa flows from Node.js with less plumbing and more confidence.",
+      description:
+        "PesaKit is the Node.js toolkit and field guide for Safaricom M-Pesa Daraja APIs.",
+      tagline:
+        "Build and operate M-Pesa flows from Node.js with less plumbing and more confidence.",
       logo: {
         src: "./src/assets/pesakit-mark.svg",
         alt: "PesaKit",

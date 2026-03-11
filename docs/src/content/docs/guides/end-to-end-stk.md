@@ -40,11 +40,7 @@ export const mpesa = new Mpesa({
 Create your own application record before you call Daraja. That gives you a stable place to persist request IDs and retry state.
 
 ```ts
-export async function createCheckout(order: {
-  id: string;
-  phoneNumber: string;
-  amount: number;
-}) {
+export async function createCheckout(order: { id: string; phoneNumber: string; amount: number }) {
   await paymentsRepo.insert({
     orderId: order.id,
     phoneNumber: order.phoneNumber,
@@ -132,16 +128,16 @@ If the query reports success but you still have no callback payload, mark the re
 
 ## What to persist for each payment attempt
 
-| Field | Why keep it |
-| ----- | ----------- |
-| Internal order or invoice ID | Correlates the Daraja flow to your own business record |
-| `CheckoutRequestID` | Main STK recovery and lookup key |
-| `MerchantRequestID` | Secondary Daraja request ID |
-| Phone number and amount | Useful for support and dispute checks |
-| Request timestamp | Helps track user claims and retry timing |
-| Callback `ResultCode` and `ResultDesc` | Final outcome and failure reason |
-| M-Pesa receipt number | Required for reconciliation and reversals |
-| Raw callback payload | Audit trail and debugging |
+| Field                                  | Why keep it                                            |
+| -------------------------------------- | ------------------------------------------------------ |
+| Internal order or invoice ID           | Correlates the Daraja flow to your own business record |
+| `CheckoutRequestID`                    | Main STK recovery and lookup key                       |
+| `MerchantRequestID`                    | Secondary Daraja request ID                            |
+| Phone number and amount                | Useful for support and dispute checks                  |
+| Request timestamp                      | Helps track user claims and retry timing               |
+| Callback `ResultCode` and `ResultDesc` | Final outcome and failure reason                       |
+| M-Pesa receipt number                  | Required for reconciliation and reversals              |
+| Raw callback payload                   | Audit trail and debugging                              |
 
 ## A safe state model
 

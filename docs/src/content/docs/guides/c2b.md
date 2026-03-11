@@ -28,13 +28,13 @@ C2B stands for customer-to-business. In this flow, the customer pays into your s
 
 ## Required config
 
-| Value | Why it is needed |
-| ----- | ---------------- |
-| `consumerKey` and `consumerSecret` | OAuth access token generation |
-| `environment` | Sandbox vs production behavior |
-| `shortCode` | The business shortcode receiving the customer payment |
-| `validationUrl` | Optional gate before completion, if your profile uses validation |
-| `confirmationUrl` | Final payment receipt callback |
+| Value                              | Why it is needed                                                 |
+| ---------------------------------- | ---------------------------------------------------------------- |
+| `consumerKey` and `consumerSecret` | OAuth access token generation                                    |
+| `environment`                      | Sandbox vs production behavior                                   |
+| `shortCode`                        | The business shortcode receiving the customer payment            |
+| `validationUrl`                    | Optional gate before completion, if your profile uses validation |
+| `confirmationUrl`                  | Final payment receipt callback                                   |
 
 ## Register your URLs
 
@@ -83,11 +83,7 @@ app.post("/mpesa/c2b/validate", (req, res) => {
   const payload = parseC2BValidation(req.body);
   const billRefIsKnown = payload.BillRefNumber.startsWith("invoice-");
 
-  res.json(
-    billRefIsKnown
-      ? C2B_VALIDATION_ACCEPT
-      : c2bValidationResponse("C2B00012", "Rejected")
-  );
+  res.json(billRefIsKnown ? C2B_VALIDATION_ACCEPT : c2bValidationResponse("C2B00012", "Rejected"));
 });
 
 app.post("/mpesa/c2b/confirm", async (req, res) => {

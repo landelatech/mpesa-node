@@ -19,14 +19,14 @@ Production-safe integrations assume:
 
 ## Endpoint map by API
 
-| Flow | Primary callback | Secondary callback or recovery path |
-| ---- | ---------------- | ----------------------------------- |
-| STK Push | `callbackUrl` | `stkQuery()` if callback is delayed |
-| C2B | `confirmationUrl` | `validationUrl` before completion |
-| B2C | `resultUrl` | `queueTimeOutUrl` plus reconciliation |
-| Account balance | `resultUrl` | `queueTimeOutUrl` |
-| Transaction status | `resultUrl` | `queueTimeOutUrl` |
-| Reversal | `resultUrl` | `queueTimeOutUrl` |
+| Flow               | Primary callback  | Secondary callback or recovery path   |
+| ------------------ | ----------------- | ------------------------------------- |
+| STK Push           | `callbackUrl`     | `stkQuery()` if callback is delayed   |
+| C2B                | `confirmationUrl` | `validationUrl` before completion     |
+| B2C                | `resultUrl`       | `queueTimeOutUrl` plus reconciliation |
+| Account balance    | `resultUrl`       | `queueTimeOutUrl`                     |
+| Transaction status | `resultUrl`       | `queueTimeOutUrl`                     |
+| Reversal           | `resultUrl`       | `queueTimeOutUrl`                     |
 
 ## Idempotency rules
 

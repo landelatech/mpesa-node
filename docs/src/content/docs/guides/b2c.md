@@ -26,15 +26,15 @@ If the customer is paying you, use [C2B Register URLs and Simulation](/guides/c2
 
 ## Required config
 
-| Value | Why it is needed |
-| ----- | ---------------- |
-| `consumerKey` and `consumerSecret` | OAuth access token generation |
-| `environment` | Sandbox vs production behavior |
-| `shortCode` | The sending organization shortcode |
-| `initiatorName` | B2C operator name configured in Daraja |
-| `securityCredential` | Encrypted initiator secret required by B2C APIs |
-| `resultUrl` | Final async result callback |
-| `queueTimeOutUrl` | Timeout callback if Daraja cannot complete the workflow in time |
+| Value                              | Why it is needed                                                |
+| ---------------------------------- | --------------------------------------------------------------- |
+| `consumerKey` and `consumerSecret` | OAuth access token generation                                   |
+| `environment`                      | Sandbox vs production behavior                                  |
+| `shortCode`                        | The sending organization shortcode                              |
+| `initiatorName`                    | B2C operator name configured in Daraja                          |
+| `securityCredential`               | Encrypted initiator secret required by B2C APIs                 |
+| `resultUrl`                        | Final async result callback                                     |
+| `queueTimeOutUrl`                  | Timeout callback if Daraja cannot complete the workflow in time |
 
 ## Send a payout
 
@@ -51,11 +51,11 @@ await mpesa.b2c.send({
 
 ## Choose the right `commandId`
 
-| `commandId` | Typical use |
-| ----------- | ----------- |
-| `BusinessPayment` | Sends money to registered M-Pesa customers for general business disbursements |
-| `SalaryPayment` | Sends salary payouts and can be used for both registered and unregistered M-Pesa customers |
-| `PromotionPayment` | Sends promotional payouts to registered M-Pesa customers |
+| `commandId`        | Typical use                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------ |
+| `BusinessPayment`  | Sends money to registered M-Pesa customers for general business disbursements              |
+| `SalaryPayment`    | Sends salary payouts and can be used for both registered and unregistered M-Pesa customers |
+| `PromotionPayment` | Sends promotional payouts to registered M-Pesa customers                                   |
 
 - `commandId` defaults to `BusinessPayment`.
 - Pick the value that matches the Daraja business purpose you are actually running.

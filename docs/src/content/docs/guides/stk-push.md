@@ -15,10 +15,10 @@ STK Push is the checkout flow where your system asks Daraja to prompt the custom
 
 ## Which shortcode and transaction type to use
 
-| Business scenario       | `transactionType`       | Typical shortcode profile |
-| ----------------------- | ----------------------- | ------------------------- |
-| Customer pays a paybill | `CustomerPayBillOnline` | Paybill                   |
-| Customer pays a till    | `CustomerBuyGoodsOnline` | Buy goods / till         |
+| Business scenario       | `transactionType`        | Typical shortcode profile |
+| ----------------------- | ------------------------ | ------------------------- |
+| Customer pays a paybill | `CustomerPayBillOnline`  | Paybill                   |
+| Customer pays a till    | `CustomerBuyGoodsOnline` | Buy goods / till          |
 
 - The SDK defaults to `CustomerPayBillOnline`.
 - Use the shortcode and passkey provisioned for that exact Daraja product.
@@ -26,14 +26,14 @@ STK Push is the checkout flow where your system asks Daraja to prompt the custom
 
 ## Required config
 
-| Value            | Why it is needed |
-| ---------------- | ---------------- |
-| `consumerKey`    | OAuth access token generation |
-| `consumerSecret` | OAuth access token generation |
-| `environment`    | Chooses sandbox vs production Daraja base URL |
-| `shortCode`      | The business shortcode initiating the push |
+| Value            | Why it is needed                                |
+| ---------------- | ----------------------------------------------- |
+| `consumerKey`    | OAuth access token generation                   |
+| `consumerSecret` | OAuth access token generation                   |
+| `environment`    | Chooses sandbox vs production Daraja base URL   |
+| `shortCode`      | The business shortcode initiating the push      |
 | `passKey`        | Used to build the STK password sent on the wire |
-| `callbackUrl`    | Receives the final asynchronous payment result |
+| `callbackUrl`    | Receives the final asynchronous payment result  |
 
 ## Start a push
 

@@ -19,24 +19,24 @@ Dynamic QR generation is not the same as payment confirmation. The QR code helps
 
 ## Required input
 
-| Value | Meaning |
-| ----- | ------- |
-| `merchantName` | merchant or company name embedded in the QR code |
-| `refNo` | invoice or transaction reference |
-| `amount` | total sale amount |
-| `trxCode` | the type of payment target |
-| `cpi` | credit party identifier: shortcode, till, business number, or phone depending on `trxCode` |
-| `size` | square image size in pixels |
+| Value          | Meaning                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| `merchantName` | merchant or company name embedded in the QR code                                           |
+| `refNo`        | invoice or transaction reference                                                           |
+| `amount`       | total sale amount                                                                          |
+| `trxCode`      | the type of payment target                                                                 |
+| `cpi`          | credit party identifier: shortcode, till, business number, or phone depending on `trxCode` |
+| `size`         | square image size in pixels                                                                |
 
 ## Supported `trxCode` values
 
-| `trxCode` | Meaning |
-| --------- | ------- |
-| `BG` | pay merchant / buy goods |
-| `WA` | withdraw cash at agent till |
-| `PB` | paybill / business number |
-| `SM` | send money to mobile number |
-| `SB` | send to business using business number in MSISDN-style format |
+| `trxCode` | Meaning                                                       |
+| --------- | ------------------------------------------------------------- |
+| `BG`      | pay merchant / buy goods                                      |
+| `WA`      | withdraw cash at agent till                                   |
+| `PB`      | paybill / business number                                     |
+| `SM`      | send money to mobile number                                   |
+| `SB`      | send to business using business number in MSISDN-style format |
 
 Pick the `trxCode` that matches the payment destination and make sure `cpi` contains the correct identifier for that flow.
 

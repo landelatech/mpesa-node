@@ -1,12 +1,7 @@
 import { MpesaValidationError } from "../../errors";
 import type { HttpClient } from "../../http";
 import { requireNonEmpty, requirePositiveInt } from "../../utils/validation";
-import type {
-  QrGenerateInput,
-  QrGenerateResponse,
-  QrModule,
-  QrTransactionCode,
-} from "./types";
+import type { QrGenerateInput, QrGenerateResponse, QrModule, QrTransactionCode } from "./types";
 
 export interface QrModuleConfig {
   http: HttpClient;
