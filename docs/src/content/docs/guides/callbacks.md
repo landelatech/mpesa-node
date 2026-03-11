@@ -19,6 +19,20 @@ sidebar:
 - Every callback endpoint should be public, stable, and served over HTTPS.
 - The SDK validates callback payload shapes, but you still own idempotency, persistence, and business decisions.
 
+## Callback handling pattern
+
+```mermaid
+flowchart TD
+    A[Daraja sends callback] --> B[Expose a stable public HTTPS endpoint]
+    B --> C[Parse and validate payload with PesaKit]
+    C --> D[Persist raw payload and correlation IDs]
+    D --> E{Outcome clear?}
+    E -->|Yes| F[Update payment or payout state]
+    E -->|No| G[Mark for reconciliation or manual review]
+    F --> H[Return HTTP 200 quickly]
+    G --> H
+```
+
 ## Use parsers inside your existing routes
 
 ```ts

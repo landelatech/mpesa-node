@@ -53,6 +53,35 @@ await mpesa.c2b.registerUrls({
 - `responseType: "Completed"` tells Daraja to complete the transaction when your endpoint accepts it.
 - Daraja expects these routes to be reachable from the public internet, not only from your local machine.
 
+## Flow overview
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Customer
+    participant MPesa as M-Pesa
+    participant Validate as validationUrl
+    participant Confirm as confirmationUrl
+    participant App as Your backend
+
+    Customer->>MPesa: Pay paybill or till
+
+    alt External validation enabled
+        MPesa->>Validate: Validation callback
+        Validate->>App: Check bill ref or account
+        App-->>Validate: Accept or reject
+        alt Accepted
+            MPesa->>Confirm: Confirmation callback
+            Confirm->>App: Persist receipt event
+        else Rejected
+            MPesa-->>Customer: Payment rejected
+        end
+    else Validation disabled
+        MPesa->>Confirm: Confirmation callback only
+        Confirm->>App: Persist receipt event
+    end
+```
+
 ## How Register URL behaves at runtime
 
 - If external validation is disabled on the shortcode, M-Pesa skips validation and only sends the confirmation callback after a successful payment.

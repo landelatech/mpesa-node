@@ -2,6 +2,7 @@ import { fileURLToPath } from "node:url";
 
 import partytown from "@astrojs/partytown";
 import starlight from "@astrojs/starlight";
+import mermaid from "astro-mermaid";
 import { defineConfig } from "astro/config";
 import starlightLinksValidator from "starlight-links-validator";
 import { createStarlightTypeDocPlugin } from "starlight-typedoc";
@@ -39,6 +40,18 @@ gtag("config", "${googleAnalyticsId}");
 export default defineConfig({
   site: siteUrl,
   integrations: [
+    mermaid({
+      theme: "forest",
+      autoTheme: true,
+      mermaidConfig: {
+        flowchart: {
+          curve: "linear",
+        },
+        sequence: {
+          showSequenceNumbers: true,
+        },
+      },
+    }),
     ...(googleAnalyticsId
       ? [
           partytown({

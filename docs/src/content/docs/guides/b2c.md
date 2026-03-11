@@ -73,6 +73,34 @@ await mpesa.b2c.send({
 
 The callback payload for B2C is parsed with `parseDarajaResult()`, and you can flatten the returned parameters with `getResultParametersMap()`.
 
+## Flow overview
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Ops as Finance or operations
+    participant App as Your payout service
+    participant SDK as PesaKit SDK
+    participant Daraja
+    participant Result as resultUrl
+    participant Timeout as queueTimeOutUrl
+
+    Ops->>App: Approve payout
+    App->>SDK: mpesa.b2c.send(...)
+    SDK->>Daraja: Submit B2C request
+    Daraja-->>App: Sync acknowledgement + conversation IDs
+    App->>App: Persist submission state
+
+    alt Daraja finishes the workflow
+        Daraja->>Result: Final result callback
+        Result->>App: Mark success or failure
+    else Daraja times out
+        Daraja->>Timeout: Timeout callback
+        Timeout->>App: Mark timeout
+        App->>App: Schedule reconciliation or follow-up
+    end
+```
+
 ## Operational guidance
 
 - Do not mark the payout as complete from the synchronous response alone.

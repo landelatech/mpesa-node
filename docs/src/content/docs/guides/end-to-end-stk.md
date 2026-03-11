@@ -15,6 +15,37 @@ This is the practical flow most teams need in production:
 4. Receive the callback and mark the payment as paid or failed.
 5. Recover incomplete records with STK query if the callback is delayed.
 
+## Flow overview
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Customer
+    participant App as Your checkout API
+    participant SDK as PesaKit SDK
+    participant Daraja
+    participant Callback as STK callback route
+    participant Worker as Recovery job
+
+    Customer->>App: Start checkout
+    App->>App: Create pending payment record
+    App->>SDK: mpesa.stkPush(...)
+    SDK->>Daraja: Submit STK Push
+    Daraja-->>Customer: Phone prompt
+    Daraja-->>App: Sync acknowledgement + request IDs
+    App->>App: Persist CheckoutRequestID and MerchantRequestID
+
+    alt Callback arrives
+        Daraja->>Callback: Final STK callback
+        Callback->>App: Mark paid or failed
+    else Callback is delayed or missed
+        Worker->>SDK: mpesa.stkQuery({ checkoutRequestId })
+        SDK->>Daraja: Query request status
+        Daraja-->>Worker: Query response
+        Worker->>App: Mark paid, failed, or needs_review
+    end
+```
+
 ## Prerequisites
 
 - You already have your [credentials configured](/getting-started/configuration/).
