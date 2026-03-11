@@ -50,7 +50,8 @@ console.log(response.CheckoutRequestID);
 
 ## Documentation
 
-- Docs site: [opensource.landelatech.com/mpesa-node](https://opensource.landelatech.com/mpesa-node)
+- Docs site: [mpesa-node-docs.landelatech.com](https://mpesa-node-docs.landelatech.com)
+- Hosted docs: deploy `docs/dist` to Netlify and set `SITE_URL=https://mpesa-node-docs.landelatech.com`
 - Local docs dev server: `yarn docs:dev`
 
 The docs cover setup, configuration, callbacks, sandbox credentials, go-live preparation, troubleshooting, error handling, and the current API coverage matrix.
